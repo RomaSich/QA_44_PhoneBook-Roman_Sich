@@ -1,5 +1,6 @@
 package pages;
 
+import dto.UserDto;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -27,12 +28,17 @@ public class LoginPage extends BasePage{
     WebElement btnRegistration;
     @FindBy(xpath = "//div[@class='login_login__3EHKB']/div")
     WebElement errorMessageLogin;
-    @FindBy(xpath = "//div[@class='login_login__3EHKB']/div")
-    WebElement errorMessageRegistration;
+
     public LoginPage typeLoginForm(String email, String password){
         //inputEmail.clear();
         inputEmail.sendKeys(email);
         inputPassword.sendKeys(password);
+        return this;
+    }
+    public LoginPage typeLoginForm(UserDto user){
+        //inputEmail.clear();
+        inputEmail.sendKeys(user.getEmail());
+        inputPassword.sendKeys(user.getPassword());
         return this;
     }
 
@@ -50,6 +56,11 @@ public class LoginPage extends BasePage{
         btnLoginSubmit.click();
         return this;
     }
+    public LoginPage clickBtnRegistrationNegative(){
+        btnRegistration.click();
+        return this;
+    }
+
     public LoginPage closeAlert() {
         pause(3);
         Alert alert = new WebDriverWait(driver, Duration.ofSeconds(3))
@@ -58,21 +69,12 @@ public class LoginPage extends BasePage{
         alert.accept();
         return new LoginPage(driver);
     }
-    public boolean isTextInElementPresent_errorMessage401(){
+    public boolean isTextInElementPresent_errorMessage(){
         return isElementPresent(errorMessageLogin, "Login Failed with code 401");
-
-
     }
-
-    public LoginPage clickBtnRegistrationNegative() {
-        btnRegistration.click();
-        return this;
+    public boolean isTextInElementPresent_errorMessage(String text){
+        return isElementPresent(errorMessageLogin, text);
     }
-    public boolean isTextInElementPresent_errorMessage400(){
-        return isElementPresent(errorMessageRegistration, "Registration failed with code 400");
-
-    }
-
 
 
 }

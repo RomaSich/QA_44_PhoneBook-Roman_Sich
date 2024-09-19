@@ -24,17 +24,18 @@ public class LoginTests extends ApplicationManager {
                 .typeLoginForm("rom@gmail.com", "7206@Rom----")
                 .clickBtnLoginNegative()
                 .closeAlert()
-                .isTextInElementPresent_errorMessage401())
-                ;
+                .isTextInElementPresent_errorMessage())
+        ;
     }
+
     @Test
-    public void loginNegativeTest_wrongEmail() {
+    public void loginNegativeTest_wrongEmailWOAt() {
         Assert.assertTrue(new HomePage(getDriver())
                 .clickBtnLoginHeader()
-                .typeLoginForm("rom@gmai.l.com", "7206@Rom")
+                .typeLoginForm("romgmai.l.com", "7206@Rom")
                 .clickBtnLoginNegative()
                 .closeAlert()
-                .isTextInElementPresent_errorMessage401())
+                .isTextInElementPresent_errorMessage())
         ;
     }
 }
