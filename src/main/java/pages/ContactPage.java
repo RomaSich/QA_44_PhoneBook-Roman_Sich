@@ -39,10 +39,6 @@ public class ContactPage extends BasePage {
         return lastPhoneInList.getText().equals(phone);
     }
 
-   public int getNumberOfContacts()
-   {
-       return listOfContacts.size();
-   }
     public List<String> getAllContactPhones() {
         List<String> phones = new ArrayList<>();
         for (WebElement phoneElement : listOfContacts) {

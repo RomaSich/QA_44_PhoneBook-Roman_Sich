@@ -59,7 +59,8 @@ public class AddPage extends BasePage{
         alert.accept();
         return this;
     }
-
-
-
+    public boolean btnSaveNoUse()
+    {
+        return btnSaveContact.isEnabled();
+    }
 }

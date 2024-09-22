@@ -82,6 +82,7 @@ public class AddContactsTests extends ApplicationManager {
         addPage.fillContactForm(contact);
         addPage.clickBtnSaveContact();
         addPage.closeAlert();
+        Assert.assertTrue(addPage.btnSaveNoUse());
     }
 
     @Test
@@ -97,5 +98,34 @@ public class AddContactsTests extends ApplicationManager {
         addPage.fillContactForm(contact);
         addPage.clickBtnSaveContact();
         addPage.closeAlert();
+        Assert.assertTrue(addPage.btnSaveNoUse());
+    }
+    @Test
+    public void addNewContactNegativeTestNameEmpty() {
+        ContactDtoLombok contact = ContactDtoLombok.builder()
+                .name(generateString(0)).
+                lastName(generateString(10)).
+                phone(generatePhone(10)).
+                email(generateEmail(10)).
+                address(generateString(20)).
+                description(generateString(10))
+                .build();
+        addPage.fillContactForm(contact);
+        addPage.clickBtnSaveContact();
+        Assert.assertTrue(addPage.btnSaveNoUse());
+    }
+    @Test
+    public void addNewContactNegativeTestAddressEmpty() {
+        ContactDtoLombok contact = ContactDtoLombok.builder()
+                .name(generateString(5)).
+                lastName(generateString(10)).
+                phone(generatePhone(10)).
+                email(generateEmail(10)).
+                address(generateString(0)).
+                description(generateString(10))
+                .build();
+        addPage.fillContactForm(contact);
+        addPage.clickBtnSaveContact();
+        Assert.assertTrue(addPage.btnSaveNoUse());
     }
 }
