@@ -29,7 +29,7 @@ public class LoginTests extends ApplicationManager {
     }
 
     @Test
-    public void loginNegativeTest_wrongEmailWOAt() {
+    public void loginNegativeTest_wrongEmail() {
         Assert.assertTrue(new HomePage(getDriver())
                 .clickBtnLoginHeader()
                 .typeLoginForm("romgmai.l.com", "7206@Rom")
