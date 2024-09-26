@@ -35,6 +35,10 @@ public class ContactPage extends BasePage {
     public boolean isLastPhoneEquals(String phone) {
         return lastPhoneInList.getText().equals(phone);
     }
+    public String lastPhoneNumber()
+    {
+        return lastPhoneInList.getText();
+    }
 
     public List<String> getAllContactPhones() {
         List<String> phones = new ArrayList<>();
@@ -43,10 +47,14 @@ public class ContactPage extends BasePage {
         }
         return phones;
     }
-    public boolean isPhoneAddedToList(String newPhone, List<String> initialPhones) {
-        List<String> updatedPhones = getAllContactPhones();
-        updatedPhones.removeAll(initialPhones);
-        return updatedPhones.contains(newPhone);
+    public boolean isPhonePresentInList(String phone) {
+        for(WebElement element : listOfContacts)
+        {
+            if(element.getText().equals(phone))
+            {
+                return true;
+            }
+        }return false;
     }
 
     public boolean urlContainsAdd(){
@@ -64,6 +72,7 @@ public class ContactPage extends BasePage {
             return false;
         }
     }
+
     public void clickLastPhone()
     {
         lastPhoneInList.click();

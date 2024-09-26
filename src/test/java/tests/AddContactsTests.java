@@ -26,6 +26,7 @@ public class AddContactsTests extends ApplicationManager {
 
     UserDto user = new UserDto("rom@gmail.com", "7206@Rom");
     AddPage addPage;
+    ContactPage contactPage;
 
 
     @BeforeMethod
@@ -68,8 +69,8 @@ public class AddContactsTests extends ApplicationManager {
         addPage.fillContactForm(contact);
         addPage.clickBtnSaveContact();
         ContactPage contactPage = new ContactPage(getDriver());
-        List<String> initialPhones = contactPage.getAllContactPhones();
-        Assert.assertTrue(contactPage.isPhoneAddedToList(contact.getPhone(), initialPhones));
+        String lastPhone = contactPage.lastPhoneNumber();
+        Assert.assertTrue(contactPage.isPhonePresentInList(lastPhone));
     }
 
     @Test

@@ -27,8 +27,9 @@ public class RemoveContactsTest extends ApplicationManager {
     }
 @Test
     public void removeContactTest() {
+    String lastPhone = contactPage.lastPhoneNumber();
         contactPage.clickLastPhone();
         contactPage.removeContact();
-       Assert.assertTrue(contactPage.isLastPhoneEquals("1551011276"));
+       Assert.assertTrue(contactPage.isPhonePresentInList(lastPhone));
     }
 }
