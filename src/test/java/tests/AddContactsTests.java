@@ -19,14 +19,13 @@ import java.util.List;
 
 import static utils.RandomUtils.*;
 import static pages.BasePage.*;
-import static pages.ContactPage.*;
+
 
 
 public class AddContactsTests extends ApplicationManager {
 
     UserDto user = new UserDto("rom@gmail.com", "7206@Rom");
     AddPage addPage;
-    ContactPage contactPage;
 
 
     @BeforeMethod

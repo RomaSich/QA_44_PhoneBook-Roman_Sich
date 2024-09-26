@@ -24,8 +24,8 @@ public class ContactPage extends BasePage {
     WebElement lastPhoneInList;
     @FindBy(xpath = "//div[@class='contact-item_card__2SOIM']")
     List<WebElement> listOfContacts;
-    @FindBy(xpath = "//div[@class='contact-item_card__2SOIM']/h3")
-    List<WebElement> lastPhoneInContactList;
+    @FindBy(xpath = "//button[text()='Remove']")
+    WebElement btnRemoveContact;
 
 
     public boolean isElementContactPresent() {
@@ -63,5 +63,14 @@ public class ContactPage extends BasePage {
             e.printStackTrace();
             return false;
         }
+    }
+    public void clickLastPhone()
+    {
+        lastPhoneInList.click();
+    }
+    public void removeContact()
+    {
+        pause(5);
+        btnRemoveContact.click();
     }
 }
