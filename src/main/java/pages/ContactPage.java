@@ -1,9 +1,6 @@
 package pages;
 
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
@@ -50,5 +47,21 @@ public class ContactPage extends BasePage {
         List<String> updatedPhones = getAllContactPhones();
         updatedPhones.removeAll(initialPhones);
         return updatedPhones.contains(newPhone);
+    }
+
+    public boolean urlContainsAdd(){
+        return urlContains("add", 3);
+    }
+    public boolean isAlertPresent(int time) {
+        try {
+            Alert alert = new WebDriverWait(driver, Duration.ofSeconds(time))
+                    .until(ExpectedConditions.alertIsPresent());
+            System.out.println(alert.getText());
+            alert.accept();
+            return true;
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

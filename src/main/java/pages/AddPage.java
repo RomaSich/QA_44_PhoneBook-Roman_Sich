@@ -2,6 +2,7 @@ package pages;
 
 import dto.ContactDtoLombok;
 import org.openqa.selenium.Alert;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -37,7 +38,7 @@ public class AddPage extends BasePage{
     WebElement btnSaveContact;
 
 
-    public void fillContactForm(ContactDtoLombok contact)
+    public AddPage fillContactForm(ContactDtoLombok contact)
     {
         inputName.sendKeys(contact.getName());
         inputLastName.sendKeys(contact.getLastName());
@@ -45,10 +46,12 @@ public class AddPage extends BasePage{
         inputEmail.sendKeys(contact.getEmail());
         inputAddress.sendKeys(contact.getAddress());
         inputDescription.sendKeys(contact.getDescription());
+        return this;
     }
-    public void clickBtnSaveContact()
+    public ContactPage clickBtnSaveContact()
     {
         btnSaveContact.click();
+        return new  ContactPage(driver);
     }
 
     public AddPage closeAlert() {
@@ -59,8 +62,21 @@ public class AddPage extends BasePage{
         alert.accept();
         return this;
     }
+
     public boolean btnSaveNoUse()
     {
         return btnSaveContact.isEnabled();
+    }
+    public boolean isAlertPresent(int time) {
+        try {
+            Alert alert = new WebDriverWait(driver, Duration.ofSeconds(time))
+                    .until(ExpectedConditions.alertIsPresent());
+            System.out.println(alert.getText());
+            alert.accept();
+            return true;
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }
