@@ -17,7 +17,8 @@ import static pages.BasePage.clickButtonsOnHeader;
 import static utils.RandomUtils.*;
 import static utils.RandomUtils.generateString;
 
-public class RemoveContactsTest extends ApplicationManager {
+public class EditContactTests extends ApplicationManager {
+
     UserDto user = new UserDto("rom@gmail.com", "7206@Rom");
     ContactPage contactPage;
 
@@ -32,19 +33,11 @@ public class RemoveContactsTest extends ApplicationManager {
     }
 
     @Test
-    public void removeContactTest(Method method) {
-        String lastPhone = contactPage.lastPhoneNumber();
-        logger.info("start --> " + method.getName());
-        contactPage.clickLastPhone();
-        contactPage.removeContact();
-        Assert.assertTrue(contactPage.isPhonePresentInList(lastPhone));
-    }
-    @Test
     public void editContactTest(Method method) {
         String lastPhone = contactPage.lastPhoneNumber();
         logger.info("start --> " + method.getName());
         contactPage.clickLastPhone();
-       contactPage.clickEditContact();
+        contactPage.clickEditContact();
         ContactDtoLombok contact = ContactDtoLombok.builder()
                 .name(generateString(5)).
                 lastName(generateString(10)).

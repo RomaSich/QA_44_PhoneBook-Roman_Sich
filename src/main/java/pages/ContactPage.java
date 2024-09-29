@@ -1,5 +1,6 @@
 package pages;
 
+import dto.ContactDtoLombok;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -26,8 +27,34 @@ public class ContactPage extends BasePage {
     List<WebElement> listOfContacts;
     @FindBy(xpath = "//button[text()='Remove']")
     WebElement btnRemoveContact;
+    @FindBy(xpath = "//button[text()='Edit']")
+    WebElement btnEditContact;
 
+    @FindBy(xpath = "//input[@placeholder='Name']")
+    WebElement inputName;
+    @FindBy(xpath = "//input[@placeholder='Last Name']")
+    WebElement inputLastName;
+    @FindBy(xpath = "//input[@placeholder='Phone']")
+    WebElement inputPhone;
+    @FindBy(xpath = "//input[@placeholder='email']")
+    WebElement inputEmail;
+    @FindBy(xpath = "//input[@placeholder='Address']")
+    WebElement inputAddress;
+    @FindBy(xpath = "//input[@placeholder='desc']")
+    WebElement inputDescription;
+    @FindBy(xpath = "//button[text()='Save']")
+    WebElement btnSave;
 
+    public ContactPage fillContactForm(ContactDtoLombok contact)
+    {
+        inputName.sendKeys(contact.getName());
+        inputLastName.sendKeys(contact.getLastName());
+        inputPhone.sendKeys(contact.getPhone());
+        inputEmail.sendKeys(contact.getEmail());
+        inputAddress.sendKeys(contact.getAddress());
+        inputDescription.sendKeys(contact.getDescription());
+        return this;
+    }
     public boolean isElementContactPresent() {
         return btnContact.isDisplayed();
     }
@@ -35,26 +62,25 @@ public class ContactPage extends BasePage {
     public boolean isLastPhoneEquals(String phone) {
         return lastPhoneInList.getText().equals(phone);
     }
-    public String lastPhoneNumber()
-    {
-        return lastPhoneInList.getText();
-    }
-
-    public List<String> getAllContactPhones() {
-        List<String> phones = new ArrayList<>();
-        for (WebElement phoneElement : listOfContacts) {
-            phones.add(phoneElement.getText());
+    public String lastPhoneNumber() {
+        if (!listOfContacts.isEmpty()) {
+            return listOfContacts.get(listOfContacts.size() - 1).getText();
         }
-        return phones;
+        return lastPhoneNumber();
     }
     public boolean isPhonePresentInList(String phone) {
-        for(WebElement element : listOfContacts)
-        {
-            if(element.getText().equals(phone))
-            {
+       try {
+           listOfContacts = driver.findElements(By.xpath("//div[@class='contact-item_card__2SOIM']"));
+
+        for(WebElement element : listOfContacts) {
+            if (element.getText().equals(phone)) {
                 return true;
             }
-        }return false;
+        }
+        }catch (StaleElementReferenceException e)
+       {
+           return isPhonePresentInList(phone);
+       }return false;
     }
 
     public boolean urlContainsAdd(){
@@ -75,11 +101,23 @@ public class ContactPage extends BasePage {
 
     public void clickLastPhone()
     {
+        clickWait(lastPhoneInList,10);
         lastPhoneInList.click();
     }
     public void removeContact()
     {
-        pause(5);
+        clickWait(btnRemoveContact,10);
         btnRemoveContact.click();
+    }
+    public void clickEditContact()
+    {
+        clickWait(btnEditContact, 10);
+        btnEditContact.click();
+    }
+    public void clickBtnSave()
+    {
+        pause(5);
+        clickWait(btnSave,10);
+        btnSave.click();
     }
 }

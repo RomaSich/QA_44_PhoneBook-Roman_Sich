@@ -5,10 +5,13 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.HomePage;
 
+import java.lang.reflect.Method;
+
 public class LoginTests extends ApplicationManager {
 
     @Test
-    public void loginPositiveTest() {
+    public void loginPositiveTest(Method method) {
+        logger.info("start --> " + method.getName());
         boolean result = new HomePage(getDriver())
                 .clickBtnLoginHeader()
                 .typeLoginForm("rom@gmail.com", "7206@Rom")
