@@ -39,12 +39,12 @@ public class RemoveContactsTest extends ApplicationManager {
         contactPage.removeContact();
         Assert.assertTrue(contactPage.isPhonePresentInList(lastPhone));
     }
+
     @Test
     public void editContactTest(Method method) {
-        String lastPhone = contactPage.lastPhoneNumber();
         logger.info("start --> " + method.getName());
         contactPage.clickLastPhone();
-       contactPage.clickEditContact();
+        contactPage.clickEditContact();
         ContactDtoLombok contact = ContactDtoLombok.builder()
                 .name(generateString(5)).
                 lastName(generateString(10)).

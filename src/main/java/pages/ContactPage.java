@@ -9,7 +9,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ContactPage extends BasePage {
@@ -112,12 +111,10 @@ public class ContactPage extends BasePage {
     public void clickEditContact()
     {
         clickWait(btnEditContact, 10);
-        btnEditContact.click();
     }
     public void clickBtnSave()
     {
         pause(5);
         clickWait(btnSave,10);
-        btnSave.click();
     }
 }
