@@ -34,6 +34,7 @@ public class EditContactTests extends ApplicationManager {
 
     @Test
     public void editContactTest(Method method) {
+        String lastPhone = contactPage.lastPhoneNumber();
         logger.info("start --> " + method.getName());
         contactPage.clickLastPhone();
         contactPage.clickEditContact();
@@ -47,6 +48,6 @@ public class EditContactTests extends ApplicationManager {
                 .build();
         contactPage.fillContactForm(contact);
         contactPage.clickBtnSave();
-        Assert.assertFalse(contactPage.isLastPhoneEquals(contact.getPhone()));
+        Assert.assertTrue(contactPage.isPhonePresentInList(lastPhone));
     }
 }

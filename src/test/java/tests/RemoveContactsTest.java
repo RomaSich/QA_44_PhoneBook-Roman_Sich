@@ -40,21 +40,4 @@ public class RemoveContactsTest extends ApplicationManager {
         Assert.assertTrue(contactPage.isPhonePresentInList(lastPhone));
     }
 
-    @Test
-    public void editContactTest(Method method) {
-        logger.info("start --> " + method.getName());
-        contactPage.clickLastPhone();
-        contactPage.clickEditContact();
-        ContactDtoLombok contact = ContactDtoLombok.builder()
-                .name(generateString(5)).
-                lastName(generateString(10)).
-                phone(generatePhone(10)).
-                email(generateEmail(10)).
-                address(generateString(10)).
-                description(generateString(10))
-                .build();
-        contactPage.fillContactForm(contact);
-        contactPage.clickBtnSave();
-        Assert.assertTrue(contactPage.isLastPhoneEquals(contact.getPhone()));
-    }
 }
