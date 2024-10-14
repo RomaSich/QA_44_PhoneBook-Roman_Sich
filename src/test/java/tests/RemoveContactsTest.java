@@ -1,22 +1,23 @@
 package tests;
 
-import dto.ContactDtoLombok;
+
 import dto.UserDto;
 import manager.ApplicationManager;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.ContactPage;
 import pages.HomePage;
 import pages.LoginPage;
 import utils.HeaderMenuItem;
+import utils.TestNGListener;
 
 import java.lang.reflect.Method;
 
 import static pages.BasePage.clickButtonsOnHeader;
-import static utils.RandomUtils.*;
-import static utils.RandomUtils.generateString;
 
+@Listeners(TestNGListener.class)
 public class RemoveContactsTest extends ApplicationManager {
     UserDto user = new UserDto("rom@gmail.com", "7206@Rom");
     ContactPage contactPage;
@@ -27,17 +28,19 @@ public class RemoveContactsTest extends ApplicationManager {
         logger.info("start method --> login");
         new HomePage(getDriver());
         LoginPage loginPage = clickButtonsOnHeader(HeaderMenuItem.LOGIN);
-        loginPage.typeLoginForm(user).clickBtnLoginPositive();
-        contactPage = clickButtonsOnHeader(HeaderMenuItem.CONTACTS);
+        contactPage = loginPage.typeLoginForm(user).clickBtnLoginPositive();
     }
 
     @Test
     public void removeContactTest(Method method) {
-        String lastPhone = contactPage.lastPhoneNumber();
+       int before = contactPage.getContactNumber();
+        System.out.println("-->"+before);
         logger.info("start --> " + method.getName());
         contactPage.clickLastPhone();
-        contactPage.removeContact();
-        Assert.assertTrue(contactPage.isPhonePresentInList(lastPhone));
+        contactPage.clickBtnRemoveContact();
+        int after = contactPage.getContactNumber();
+        System.out.println("-->"+after);
+        Assert.assertEquals(before , after-1);
     }
 
 }

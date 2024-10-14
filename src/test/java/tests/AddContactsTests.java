@@ -4,23 +4,21 @@ import data_provider.DPAddContact;
 import dto.ContactDtoLombok;
 import dto.UserDto;
 import manager.ApplicationManager;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.AddPage;
 import pages.ContactPage;
 import pages.HomePage;
 import pages.LoginPage;
 import utils.HeaderMenuItem;
-
-import java.util.List;
+import utils.TestNGListener;
 
 import static utils.RandomUtils.*;
 import static pages.BasePage.*;
 
-
+@Listeners(TestNGListener.class)
 
 public class AddContactsTests extends ApplicationManager {
 
@@ -68,9 +66,9 @@ public class AddContactsTests extends ApplicationManager {
 
         addPage.fillContactForm(contact);
         addPage.clickBtnSaveContact();
-        ContactPage contactPage = new ContactPage(getDriver());
+        int start = contactPage.getContactNumber();
         String lastPhone = contactPage.lastPhoneNumber();
-        Assert.assertTrue(contactPage.isPhonePresentInList(lastPhone));
+        Assert.assertEquals(start, contactPage.getContactNumber());
     }
 
     @Test

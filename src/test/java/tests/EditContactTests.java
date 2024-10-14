@@ -5,21 +5,27 @@ import dto.UserDto;
 import manager.ApplicationManager;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.ContactPage;
 import pages.HomePage;
 import pages.LoginPage;
 import utils.HeaderMenuItem;
+import utils.RetryAnalyzer;
+import utils.TestNGListener;
+import static utils.PropertiesReader.getProperty;
 
 import java.lang.reflect.Method;
 
 import static pages.BasePage.clickButtonsOnHeader;
 import static utils.RandomUtils.*;
 import static utils.RandomUtils.generateString;
-
+@Listeners(TestNGListener.class)
 public class EditContactTests extends ApplicationManager {
 
-    UserDto user = new UserDto("rom@gmail.com", "7206@Rom");
+   //UserDto user = new UserDto("rom@gmail.com", "7206@Rom");
+    UserDto user = new UserDto(getProperty("data.properties", "email")
+           , getProperty("data.properties","password"));
     ContactPage contactPage;
 
 
@@ -28,26 +34,26 @@ public class EditContactTests extends ApplicationManager {
         logger.info("start method --> login");
         new HomePage(getDriver());
         LoginPage loginPage = clickButtonsOnHeader(HeaderMenuItem.LOGIN);
-        loginPage.typeLoginForm(user).clickBtnLoginPositive();
-        contactPage = clickButtonsOnHeader(HeaderMenuItem.CONTACTS);
+        contactPage = loginPage.typeLoginForm(user).clickBtnLoginPositive();
+
     }
 
-    @Test
-    public void editContactTest(Method method) {
-        String lastPhone = contactPage.lastPhoneNumber();
-        logger.info("start --> " + method.getName());
-        contactPage.clickLastPhone();
-        contactPage.clickEditContact();
-        ContactDtoLombok contact = ContactDtoLombok.builder()
-                .name(generateString(5)).
-                lastName(generateString(10)).
-                phone(generatePhone(10)).
-                email(generateEmail(10)).
-                address(generateString(10)).
-                description(generateString(10))
+    @Test(retryAnalyzer = RetryAnalyzer.class)
+    public void editContactTest() {
+       // logger.info("start --> " + method.getName());
+
+        ContactDtoLombok newContact = ContactDtoLombok.builder()
+                .name("new-"+generateString(5)).
+                lastName("new-"+generateString(10)).
+                phone("054"+generatePhone(7)).
+                email("new-"+generateEmail(6)).
+                address("new-"+generateString(10))
+                .description("new-"+generateString(10))
                 .build();
-        contactPage.fillContactForm(contact);
+        contactPage.clickLastPhone();
+        contactPage.fillContactForm(newContact);
         contactPage.clickBtnSave();
-        Assert.assertTrue(contactPage.isPhonePresentInList(lastPhone));
+        ContactDtoLombok contact = contactPage.getContactFromDetailedCard();
+        Assert.assertEquals(newContact, contact);
     }
 }

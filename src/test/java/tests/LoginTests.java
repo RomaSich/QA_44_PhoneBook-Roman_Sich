@@ -1,22 +1,27 @@
 package tests;
 
 import manager.ApplicationManager;
+import org.openqa.selenium.TakesScreenshot;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.HomePage;
-
+import utils.TestNGListener;
+import static utils.TakeScreenShot.takeScreenShot;
 import java.lang.reflect.Method;
-
+import static utils.PropertiesReader.getProperty;
+@Listeners(TestNGListener.class)
 public class LoginTests extends ApplicationManager {
 
     @Test
     public void loginPositiveTest(Method method) {
-        logger.info("start --> " + method.getName());
+
         boolean result = new HomePage(getDriver())
                 .clickBtnLoginHeader()
-                .typeLoginForm("rom@gmail.com", "7206@Rom")
+                .typeLoginForm(getProperty("data.properties","email"),getProperty("data.properties","password"))
                 .clickBtnLoginPositive()
                 .isElementContactPresent();
+        takeScreenShot((TakesScreenshot) getDriver());
         Assert.assertTrue(result);
     }
 
