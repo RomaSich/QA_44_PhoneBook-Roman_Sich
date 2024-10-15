@@ -39,8 +39,8 @@ public class EditContactTests extends ApplicationManager {
     }
 
     @Test(retryAnalyzer = RetryAnalyzer.class)
-    public void editContactTest() {
-       // logger.info("start --> " + method.getName());
+    public void editContactTest(Method method) {
+       logger.info("start --> " + method.getName());
 
         ContactDtoLombok newContact = ContactDtoLombok.builder()
                 .name("new-"+generateString(5)).

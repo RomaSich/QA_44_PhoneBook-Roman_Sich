@@ -11,6 +11,7 @@ import utils.TestNGListener;
 import static utils.RandomUtils.generateString;
 import static utils.RandomUtils.generateEmail;
 import java.util.Random;
+import static utils.PropertiesReader.getProperty;
 @Listeners(TestNGListener.class)
 
 public class RegistrationTests extends ApplicationManager {
@@ -21,14 +22,14 @@ public class RegistrationTests extends ApplicationManager {
         String email = "roma" + i + "@gmail.com";
         Assert.assertTrue(new HomePage(getDriver())
                 .clickBtnLoginHeader()
-                .typeLoginForm(email, "7206@Pom")
+                .typeLoginForm(email, getProperty("data.properties","password"))
                 .clickBtnRegistrationPositive()
                 .isElementContactPresent());
     }
     @Test
     public void registrationNegativeTest_wrongEmail(){
         String email = generateString(10);
-        UserDto user = new UserDto(email,"7206@Pom");
+        UserDto user = new UserDto(email,getProperty("data.properties","password"));
        new HomePage(getDriver())
                 .clickBtnLoginHeader()
                 .typeLoginForm(user)

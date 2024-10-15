@@ -17,12 +17,13 @@ import utils.TestNGListener;
 
 import static utils.RandomUtils.*;
 import static pages.BasePage.*;
-
+import static utils.PropertiesReader.getProperty;
 @Listeners(TestNGListener.class)
+
 
 public class AddContactsTests extends ApplicationManager {
 
-    UserDto user = new UserDto("rom@gmail.com", "7206@Rom");
+    UserDto user = new UserDto(getProperty("data.properties","email"),getProperty("data.properties","password"));
     AddPage addPage;
     ContactPage contactPage;
 

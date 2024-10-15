@@ -27,12 +27,14 @@ public class LoginTests extends ApplicationManager {
 
     @Test
     public void loginNegativeTest_wrongPassword() {
+        takeScreenShot((TakesScreenshot) getDriver());
         Assert.assertTrue(new HomePage(getDriver())
                 .clickBtnLoginHeader()
                 .typeLoginForm("rom@gmail.com", "7206@Rom----")
                 .clickBtnLoginNegative()
                 .closeAlert()
                 .isTextInElementPresent_errorMessage())
+
         ;
     }
 
@@ -40,7 +42,7 @@ public class LoginTests extends ApplicationManager {
     public void loginNegativeTest_wrongEmail() {
         Assert.assertTrue(new HomePage(getDriver())
                 .clickBtnLoginHeader()
-                .typeLoginForm("romgmai.l.com", "7206@Rom")
+                .typeLoginForm("romgmai.l.com", getProperty("data.properties","password"))
                 .clickBtnLoginNegative()
                 .closeAlert()
                 .isTextInElementPresent_errorMessage())

@@ -1,10 +1,7 @@
 package pages;
 
 import dto.ContactDtoLombok;
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
@@ -55,7 +52,6 @@ public class AddPage extends BasePage{
     }
 
     public AddPage closeAlert() {
-        pause(2);
         Alert alert = new WebDriverWait(driver, Duration.ofSeconds(3))
                 .until(ExpectedConditions.alertIsPresent());
         System.out.println(alert.getText());
@@ -65,6 +61,7 @@ public class AddPage extends BasePage{
 
     public boolean btnSaveNoUse()
     {
+        clickWait(By.xpath("//button/b"),10);
         return btnSaveContact.isEnabled();
     }
     public boolean isAlertPresent(int time) {

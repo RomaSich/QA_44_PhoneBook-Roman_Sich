@@ -16,10 +16,10 @@ import utils.TestNGListener;
 import java.lang.reflect.Method;
 
 import static pages.BasePage.clickButtonsOnHeader;
-
+import static utils.PropertiesReader.getProperty;
 @Listeners(TestNGListener.class)
 public class RemoveContactsTest extends ApplicationManager {
-    UserDto user = new UserDto("rom@gmail.com", "7206@Rom");
+    UserDto user = new UserDto(getProperty("data.properties","email"),getProperty("data.properties","password"));
     ContactPage contactPage;
 
 
