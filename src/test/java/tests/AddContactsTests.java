@@ -3,6 +3,9 @@ package tests;
 import data_provider.DPAddContact;
 import dto.ContactDtoLombok;
 import dto.UserDto;
+import io.qameta.allure.Allure;
+import io.qameta.allure.Description;
+import io.qameta.allure.Owner;
 import manager.ApplicationManager;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
@@ -18,12 +21,14 @@ import utils.TestNGListener;
 import static utils.RandomUtils.*;
 import static pages.BasePage.*;
 import static utils.PropertiesReader.getProperty;
+
 @Listeners(TestNGListener.class)
 
 
 public class AddContactsTests extends ApplicationManager {
 
-    UserDto user = new UserDto(getProperty("data.properties","email"),getProperty("data.properties","password"));
+    UserDto user = new UserDto(getProperty("data.properties", "email"),
+            getProperty("data.properties", "password"));
     AddPage addPage;
     ContactPage contactPage;
 
@@ -37,7 +42,8 @@ public class AddContactsTests extends ApplicationManager {
 
     }
 
-
+    @Description("positive methode add contact")
+    @Owner("QA Roman")
     @Test
     public void addNewContactPositiveTest() {
         ContactDtoLombok contact = ContactDtoLombok.builder()
@@ -49,26 +55,28 @@ public class AddContactsTests extends ApplicationManager {
                 description(generateString(10))
                 .build();
         ContactPage contactPage = new ContactPage(getDriver());
+        Allure.step("fill contact form");
         addPage.fillContactForm(contact);
+        Allure.step("click btn save contact");
         addPage.clickBtnSaveContact();
         Assert.assertTrue(contactPage.isLastPhoneEquals(contact.getPhone()));
     }
 
+    @Description("positive methode added contact")
+    @Owner("QA Roman")
     @Test
     public void ContactAddedPositiveTest() {
         ContactDtoLombok contact = ContactDtoLombok.builder()
                 .name(generateString(5)).
-                lastName(generateString(10)).
+                lastName(generateString(5)).
                 phone(generatePhone(10)).
                 email(generateEmail(12)).
                 address(generateString(20)).
                 description(generateString(10))
                 .build();
-
         addPage.fillContactForm(contact);
         addPage.clickBtnSaveContact();
         int start = contactPage.getContactNumber();
-        String lastPhone = contactPage.lastPhoneNumber();
         Assert.assertEquals(start, contactPage.getContactNumber());
     }
 
@@ -86,7 +94,7 @@ public class AddContactsTests extends ApplicationManager {
         addPage.clickBtnSaveContact();
         addPage.closeAlert();
 
-       Assert.assertTrue(addPage.btnSaveNoUse());
+        Assert.assertTrue(addPage.btnSaveNoUse());
     }
 
     @Test
@@ -101,7 +109,7 @@ public class AddContactsTests extends ApplicationManager {
                 .build();
         addPage.fillContactForm(contact);
         addPage.clickBtnSaveContact();
-       Assert.assertTrue(addPage.isAlertPresent(2));
+        Assert.assertTrue(addPage.isAlertPresent(2));
     }
 
     @Test
@@ -152,10 +160,19 @@ public class AddContactsTests extends ApplicationManager {
                 .isAlertPresent(5))
         ;
     }
-    @Test(dataProvider = "addNewContactDPPhone", dataProviderClass = DPAddContact.class)
+
+    @Description("positive methode add contact")
+    @Owner("QA Roman")
+    @Test(dataProvider = "addNewContactDPPhone", dataProviderClass = DPAddContact.
+            class, expectedExceptions = {org.openqa.selenium.NoSuchElementException.class,
+            IndexOutOfBoundsException.class}
+    )
     public void addNewContactNegativeTestPhoneErrorDP(ContactDtoLombok contact) {
+
         addPage.fillContactForm(contact);
+        Allure.step("click btn save contact");
         addPage.clickBtnSaveContact();
+        Allure.step("close alert");
         addPage.closeAlert();
         Assert.assertTrue(addPage.btnSaveNoUse());
     }

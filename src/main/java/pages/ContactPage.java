@@ -9,7 +9,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-import java.util.List;
 
 public class ContactPage extends BasePage {
     public ContactPage(WebDriver driver) {
@@ -22,8 +21,9 @@ public class ContactPage extends BasePage {
     WebElement btnContact;
     @FindBy(xpath = "//div[@class='contact-item_card__2SOIM'][last()]/h3")
     WebElement lastPhoneInList;
-    @FindBy(xpath = "//div[@class='contact-item_card__2SOIM']")
-    List<WebElement> listOfContacts;
+
+    @FindBy(xpath = "//div[@class='contact-page_leftdiv__yhyke']//div[@class='contact-item_card__2SOIM']")
+    WebElement firstContactOnList;
     @FindBy(xpath = "//button[text()='Remove']")
     WebElement btnRemoveContact;
     //============================================
@@ -75,12 +75,7 @@ public class ContactPage extends BasePage {
     public boolean isLastPhoneEquals(String phone) {
         return lastPhoneInList.getText().equals(phone);
     }
-    public String lastPhoneNumber() {
-        if (!listOfContacts.isEmpty()) {
-            return listOfContacts.get(listOfContacts.size() - 1).getText();
-        }
-        return lastPhoneNumber();
-    }
+
     public int getContactNumber()
     {
      return driver.findElements(By.xpath("//div[@class='contact-item_card__2SOIM'][last()]/h3")).size();
@@ -124,6 +119,7 @@ public class ContactPage extends BasePage {
                 .address(contactCardPhoneEmailAddress.getText().split("\n")[3])
                 .description(contactCardDescription.getText().split(": ")[1])
                 .build();
+        System.out.println(contact);
         return contact;
     }
 

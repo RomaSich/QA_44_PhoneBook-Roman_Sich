@@ -2,6 +2,9 @@ package tests;
 
 
 import dto.UserDto;
+import io.qameta.allure.Allure;
+import io.qameta.allure.Description;
+import io.qameta.allure.Owner;
 import manager.ApplicationManager;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
@@ -31,12 +34,16 @@ public class RemoveContactsTest extends ApplicationManager {
         contactPage = loginPage.typeLoginForm(user).clickBtnLoginPositive();
     }
 
+    @Description("positive methode remove contact")
+    @Owner("QA Roman")
     @Test
     public void removeContactTest(Method method) {
        int before = contactPage.getContactNumber();
         System.out.println("-->"+before);
         logger.info("start --> " + method.getName());
+        Allure.step("click last Phone");
         contactPage.clickLastPhone();
+        Allure.step("click Remove contact");
         contactPage.clickBtnRemoveContact();
         int after = contactPage.getContactNumber();
         System.out.println("-->"+after);

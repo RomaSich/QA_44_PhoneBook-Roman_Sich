@@ -35,14 +35,14 @@ public class AddPage extends BasePage{
     WebElement btnSaveContact;
 
 
-    public AddPage fillContactForm(ContactDtoLombok contact)
+    public AddPage fillContactForm(ContactDtoLombok newContact)
     {
-        inputName.sendKeys(contact.getName());
-        inputLastName.sendKeys(contact.getLastName());
-        inputPhone.sendKeys(contact.getPhone());
-        inputEmail.sendKeys(contact.getEmail());
-        inputAddress.sendKeys(contact.getAddress());
-        inputDescription.sendKeys(contact.getDescription());
+        inputName.sendKeys(newContact.getName());
+        inputLastName.sendKeys(newContact.getLastName());
+        inputPhone.sendKeys(newContact.getPhone());
+        inputEmail.sendKeys(newContact.getEmail());
+        inputAddress.sendKeys(newContact.getAddress());
+        inputDescription.sendKeys(newContact.getDescription());
         return this;
     }
     public ContactPage clickBtnSaveContact()
