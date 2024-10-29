@@ -1,0 +1,1 @@
+{"uuid":"591146ca-92e7-4539-b312-8fbac0bc2256","name":"tests.AddContactsTests.login","children":["c224b516-713e-4bbc-bec8-777faff3a40e"],"description":"","befores":[{"name":"login","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1729507403580,"stop":1729507408742}],"afters":[],"start":1729507403580,"stop":1729507408742}

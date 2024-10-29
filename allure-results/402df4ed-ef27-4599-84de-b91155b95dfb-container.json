@@ -1,0 +1,1 @@
+{"uuid":"402df4ed-ef27-4599-84de-b91155b95dfb","name":"tests.RemoveContactsTest.login","children":["cd9317c9-eb1d-4baa-bc80-0cbbd72c4410"],"description":"","befores":[{"name":"login","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1729504475265,"stop":1729504478004}],"afters":[],"start":1729504475265,"stop":1729504478004}

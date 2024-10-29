@@ -1,0 +1,1 @@
+{"uuid":"b4b32a48-7017-4a68-a44c-160f3cc4362b","name":"okhttp.GetAllUserPhonesTests","children":["38d7f868-0a12-49b0-8478-c56d89490d7b"],"befores":[{"name":"loginUser","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1729845401642,"stop":1729845406297}],"afters":[],"start":1729845401472,"stop":1729845407400}
