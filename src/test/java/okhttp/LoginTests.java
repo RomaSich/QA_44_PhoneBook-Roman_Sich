@@ -39,7 +39,6 @@ public class LoginTests implements BaseApi {
         }
         Assert.assertTrue(response.isSuccessful());
     }
-
     @Test
     public void loginPositiveTest_ExRes200_validateToken() throws IOException {
         UserDto user = new UserDto(getProperty("data.properties","email")
@@ -66,7 +65,7 @@ public class LoginTests implements BaseApi {
         }
     }
     @Test
-    public void registrationNegativeTest_ExRes401() throws IOException {
+    public void loginNegativeTest_ExRes401() throws IOException {
         UserDto user = new UserDto(generateEmail(10), "7206Rom");
         RequestBody requestBody = RequestBody.create(GSON.toJson(user), JSON);
         Request request = new Request.Builder()
